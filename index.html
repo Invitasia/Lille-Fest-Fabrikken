@@ -1,0 +1,821 @@
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design for Anledninger | Invitasjoner, Bordkort & Mer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        earth: {
+                            light: '#e9e5d6',
+                            medium: '#a4be7b',
+                            dark: '#5f8d4e',
+                            darker: '#285430'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap');
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f8f7f4;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .hero-pattern {
+            background-color: #f8f7f4;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23a4be7b' fill-opacity='0.15'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #5f8d4e;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .active::after {
+            width: 100%;
+        }
+        
+        .gallery-item {
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .gallery-item img {
+            transition: transform 0.5s ease;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+        
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(40, 84, 48, 0.8), transparent);
+            padding: 20px;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+        
+        .price-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .price-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .testimonial-card {
+            transition: transform 0.3s ease;
+        }
+        
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .mobile-menu {
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="#" class="flex items-center">
+                <span class="text-earth-darker font-serif text-2xl font-bold">DesignGlede</span>
+            </a>
+            
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex space-x-8">
+                <a href="#hjem" class="nav-link active text-earth-darker hover:text-earth-dark font-medium">Hjem</a>
+                <a href="#om-meg" class="nav-link text-earth-darker hover:text-earth-dark font-medium">Om meg</a>
+                <a href="#anledninger" class="nav-link text-earth-darker hover:text-earth-dark font-medium">Anledninger</a>
+                <a href="#designs" class="nav-link text-earth-darker hover:text-earth-dark font-medium">Designs</a>
+                <a href="#priser" class="nav-link text-earth-darker hover:text-earth-dark font-medium">Priser</a>
+                <a href="#kontakt" class="nav-link text-earth-darker hover:text-earth-dark font-medium">Kontakt</a>
+            </nav>
+            
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-button" class="md:hidden text-earth-darker focus:outline-none">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+        </div>
+        
+        <!-- Mobile Navigation -->
+        <div id="mobile-menu" class="mobile-menu fixed top-0 left-0 h-full w-64 bg-white shadow-lg z-50 p-5">
+            <div class="flex justify-between items-center mb-8">
+                <span class="text-earth-darker font-serif text-xl font-bold">DesignGlede</span>
+                <button id="close-menu" class="text-earth-darker focus:outline-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <nav class="flex flex-col space-y-4">
+                <a href="#hjem" class="text-earth-darker hover:text-earth-dark font-medium py-2 border-b border-gray-100">Hjem</a>
+                <a href="#om-meg" class="text-earth-darker hover:text-earth-dark font-medium py-2 border-b border-gray-100">Om meg</a>
+                <a href="#anledninger" class="text-earth-darker hover:text-earth-dark font-medium py-2 border-b border-gray-100">Anledninger</a>
+                <a href="#designs" class="text-earth-darker hover:text-earth-dark font-medium py-2 border-b border-gray-100">Designs</a>
+                <a href="#priser" class="text-earth-darker hover:text-earth-dark font-medium py-2 border-b border-gray-100">Priser</a>
+                <a href="#kontakt" class="text-earth-darker hover:text-earth-dark font-medium py-2">Kontakt</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hjem" class="hero-pattern py-20 md:py-32">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-earth-darker mb-6">Vakre design for livets spesielle øyeblikk</h1>
+                    <p class="text-lg text-gray-700 mb-8">Personlige invitasjoner, bordkort og spill som gjør enhver anledning uforglemmelig.</p>
+                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                        <a href="#anledninger" class="bg-earth-dark hover:bg-earth-darker text-white font-medium py-3 px-6 rounded-lg transition duration-300 text-center">Utforsk anledninger</a>
+                        <a href="#kontakt" class="border-2 border-earth-dark text-earth-dark hover:bg-earth-dark hover:text-white font-medium py-3 px-6 rounded-lg transition duration-300 text-center">Kontakt meg</a>
+                    </div>
+                </div>
+                <div class="md:w-1/2">
+                    <div class="relative">
+                        <!-- SVG Illustration -->
+                        <svg class="w-full h-auto" viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Background shape -->
+                            <rect x="100" y="50" width="400" height="300" rx="20" fill="#e9e5d6" />
+                            
+                            <!-- Invitation card -->
+                            <rect x="150" y="100" width="200" height="150" rx="5" fill="white" stroke="#5f8d4e" stroke-width="2" />
+                            <path d="M150 130 L350 130" stroke="#a4be7b" stroke-width="1" />
+                            <path d="M180 150 L320 150" stroke="#a4be7b" stroke-width="1" />
+                            <path d="M180 170 L320 170" stroke="#a4be7b" stroke-width="1" />
+                            <path d="M180 190 L320 190" stroke="#a4be7b" stroke-width="1" />
+                            <path d="M180 210 L270 210" stroke="#a4be7b" stroke-width="1" />
+                            
+                            <!-- Decorative elements -->
+                            <circle cx="330" cy="110" r="15" fill="#a4be7b" opacity="0.7" />
+                            <circle cx="350" cy="130" r="10" fill="#5f8d4e" opacity="0.5" />
+                            
+                            <!-- Place card -->
+                            <rect x="380" y="150" width="120" height="80" rx="3" fill="white" stroke="#5f8d4e" stroke-width="2" />
+                            <path d="M400 180 L480 180" stroke="#a4be7b" stroke-width="1" />
+                            <path d="M420 200 L460 200" stroke="#a4be7b" stroke-width="1" />
+                            
+                            <!-- Decorative flowers -->
+                            <circle cx="150" y="80" r="20" fill="#a4be7b" opacity="0.6" />
+                            <circle cx="170" y="70" r="15" fill="#5f8d4e" opacity="0.5" />
+                            <circle cx="160" y="60" r="10" fill="#a4be7b" opacity="0.7" />
+                            
+                            <circle cx="450" y="280" r="25" fill="#a4be7b" opacity="0.6" />
+                            <circle cx="470" y="270" r="18" fill="#5f8d4e" opacity="0.5" />
+                            <circle cx="480" y="290" r="15" fill="#a4be7b" opacity="0.7" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Me Section -->
+    <section id="om-meg" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-2/5 mb-10 md:mb-0">
+                    <div class="relative">
+                        <!-- Designer illustration -->
+                        <svg class="w-full h-auto" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Background circle -->
+                            <circle cx="200" cy="200" r="150" fill="#e9e5d6" />
+                            
+                            <!-- Person silhouette -->
+                            <ellipse cx="200" cy="170" rx="70" ry="80" fill="#5f8d4e" />
+                            <circle cx="200" cy="120" r="40" fill="#5f8d4e" />
+                            
+                            <!-- Design elements -->
+                            <rect x="120" y="260" width="160" height="20" rx="10" fill="#a4be7b" />
+                            <rect x="140" y="290" width="120" height="15" rx="7.5" fill="#a4be7b" opacity="0.7" />
+                            <rect x="160" y="315" width="80" height="10" rx="5" fill="#a4be7b" opacity="0.5" />
+                            
+                            <!-- Decorative elements -->
+                            <circle cx="120" cy="130" r="15" fill="#a4be7b" />
+                            <circle cx="280" cy="130" r="15" fill="#a4be7b" />
+                            <circle cx="100" cy="200" r="10" fill="#285430" opacity="0.6" />
+                            <circle cx="300" cy="200" r="10" fill="#285430" opacity="0.6" />
+                            <circle cx="150" cy="80" r="8" fill="#285430" opacity="0.4" />
+                            <circle cx="250" cy="80" r="8" fill="#285430" opacity="0.4" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="md:w-3/5 md:pl-12">
+                    <div class="inline-block mb-6">
+                        <span class="bg-earth-light text-earth-darker px-4 py-2 rounded-full text-sm font-medium">Om meg</span>
+                    </div>
+                    <h2 class="text-3xl md:text-4xl font-serif font-bold text-earth-darker mb-6">Hei, jeg er <span class="text-earth-dark">Anna</span></h2>
+                    <p class="text-gray-700 mb-6 leading-relaxed">
+                        Jeg er en lidenskapelig designer med over 8 års erfaring i å skape vakre og personlige design for livets viktigste øyeblikk. Min reise begynte da jeg designet invitasjoner til min egen søsters bryllup, og siden da har jeg hjulpet hundrevis av kunder med å gjøre deres spesielle anledninger enda mer minnerike.
+                    </p>
+                    <p class="text-gray-700 mb-8 leading-relaxed">
+                        Jeg tror at hvert design bør være like unikt som anledningen det representerer. Enten det er et bryllup, en babyshower, en dåp eller en konfirmasjon, legger jeg min sjel i å skape noe som virkelig gjenspeiler din personlighet og gjør dagen din spesiell.
+                    </p>
+                    <div class="flex flex-wrap gap-4 mb-8">
+                        <div class="flex items-center">
+                            <div class="bg-earth-light p-3 rounded-full mr-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-earth-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                                </svg>
+                            </div>
+                            <span class="text-gray-700">Kreativ design</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="bg-earth-light p-3 rounded-full mr-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-earth-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+                                </svg>
+                            </div>
+                            <span class="text-gray-700">Personlig service</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="bg-earth-light p-3 rounded-full mr-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-earth-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </div>
+                            <span class="text-gray-700">Rask levering</span>
+                        </div>
+                    </div>
+                    <a href="#kontakt" class="inline-block bg-earth-dark hover:bg-earth-darker text-white font-medium py-3 px-6 rounded-lg transition duration-300">Ta kontakt</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Occasions Section -->
+    <section id="anledninger" class="py-20 bg-earth-light bg-opacity-30">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <div class="inline-block mb-4">
+                    <span class="bg-earth-light text-earth-darker px-4 py-2 rounded-full text-sm font-medium">Anledninger</span>
+                </div>
+                <h2 class="text-3xl md:text-4xl font-serif font-bold text-earth-darker mb-4">Design for enhver anledning</h2>
+                <p class="text-gray-700 max-w-2xl mx-auto">Jeg skaper personlige design for livets alle viktige øyeblikk, fra bryllup til barnedåp og alt imellom.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Bryllup -->
+                <div class="card bg-white rounded-xl overflow-hidden shadow-md">
+                    <div class="h-48 bg-earth-medium bg-opacity-20 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 text-earth-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                        </svg>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-serif font-bold text-earth-darker mb-3">Bryllup</h3>
+                        <p class="text-gray-700 mb-4">Elegante invitasjoner, bordkort, menydesign og takkekort som passer perfekt til deres store dag.</p>
+                        <ul class="mb-6 space-y-2">
+                            <li class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-earth-dark mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                </svg>
+                                <span class="text-gray-600">Invitasjoner</span>
+                            </li>
+                            <li class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-earth-dark mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                </svg>
+                                <span class="text-gray-600">Bordkort</span>
+                            </li>
+                            <li class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-earth-dark mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                </svg>
+                                <span class="text-gray-600">Menydesign</span>
+                            </li>
+                            <li class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-earth-dark mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                </svg>
+                                <span class="text-gray-600">Takkekort</span>
+                            </li>
+                        </ul>
+                        <a href="#designs" class="text-earth-dark hover:text-earth-darker font-medium flex items-center">
+                            Se eksempler
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Babyshower -->
+                <div class="card bg-white rounded-xl overflow-hidden shadow-md">
+                    <div class="h-48 bg-earth-medium bg-opacity-20 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 text-earth-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                        </svg>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-serif font-bold text-earth-darker mb-3">Babyshower</h3>
+                        <p class="text-gray-700 mb-4">Søte og lekne design for å feire den lille som er på vei, med invitasjoner og morsomme spill.</p>
+                        <ul class="mb-6 space-y-2">
+                            <li class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-earth-dark mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                </svg>
+                                <span class="text-gray-600">Invitasjoner</span>
+                            </li>
+                            <li class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-earth-dark mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                </svg>
+                                <span class="text-gray-600">Spill og aktiviteter</span>
+                            </li>
+                            <li class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-earth-dark mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                </svg>
+                                <span class="text-gray-600">Dekorasjoner</span>
+                            </li>
+                            <li class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-earth-dark mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                </svg>
+                                <span class="text-gray-600">Takkekort</span>
+                            </li>
+                        </ul>
+                        <a href="#designs" class="text-earth-dark hover:text-earth-darker font-medium flex items-center">
+                            Se eksempler
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Dåp/Konfirmasjon -->
+                <div class="card bg-white rounded-xl overflow-hidden shadow-md">
+                    <div class="h-48 bg-earth-medium bg-opacity-20 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 text-earth-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                        </svg>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-serif font-bold text-earth-darker mb-3">Dåp & Konfirmasjon</h3>
+                        <p class="text-gray-700 mb-4">Stilfulle og høytidelige design for å markere disse viktige milepælene i livet.</p>
+                        <ul class="mb-6 space-y-2">
+                            <li class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-earth-dark mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                </svg>
+                                <span class="text-gray-600">Invitasjoner</span>
+                            </li>
+                            <li class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-earth-dark mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                </svg>
+                                <span class="text-gray-600">Bordkort</span>
+                            </li>
+                            <li class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-earth-dark mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                </svg>
+                                <span class="text-gray-600">Minnebøker</span>
+                            </li>
+                            <li class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-earth-dark mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                </svg>
+                                <span class="text-gray-600">Takkekort</span>
+                            </li>
+                        </ul>
+                        <a href="#designs" class="text-earth-dark hover:text-earth-darker font-medium flex items-center">
+                            Se eksempler
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Designs Gallery Section -->
+    <section id="designs" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <div class="inline-block mb-4">
+                    <span class="bg-earth-light text-earth-darker px-4 py-2 rounded-full text-sm font-medium">Designs</span>
+                </div>
+                <h2 class="text-3xl md:text-4xl font-serif font-bold text-earth-darker mb-4">Mine seneste arbeider</h2>
+                <p class="text-gray-700 max-w-2xl mx-auto">Ta en titt på noen av mine favorittdesign fra de siste prosjektene.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Design 1 -->
+                <div class="gallery-item rounded-xl overflow-hidden shadow-md">
+                    <div class="bg-earth-medium bg-opacity-20 h-64 relative">
+                        <!-- SVG Illustration of wedding invitation -->
+                        <svg class="w-full h-full" viewBox="0 0 300 240" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="50" y="20" width="200" height="200" rx="5" fill="white" stroke="#5f8d4e" stroke-width="2" />
+                            <text x="150" y="60" font-family="'Playfair Display', serif" font-size="14" text-anchor="middle" fill="#285430">BRYLLUPSINVITASJON</text>
+                            <line x1="100" y1="70" x2="200" y2="70" stroke="#a4be7b" stroke-width="1" />
+                            <text x="150" y="100" font-family="'Playfair Display', serif" font-size="16" text-anchor="middle" fill="#285430">Anna & Thomas</text>
+                            <text x="150" y="130" font-family="'Montserrat', sans-serif" font-size="12" text-anchor="middle" fill="#5f8d4e">inviterer til bryllup</text>
+                            <text x="150" y="160" font-family="'Montserrat', sans-serif" font-size="12" text-anchor="middle" fill="#5f8d4e">15. juni 2023</text>
+                            <circle cx="150" cy="180" r="10" fill="#a4be7b" opacity="0.7" />
+                            <path d="M130,180 Q150,160 170,180" stroke="#5f8d4e" stroke-width="1" fill="none" />
+                        </svg>
+                    </div>
+                    <div class="gallery-overlay">
+                        <h3 class="text-white font-serif font-bold text-lg">Elegant bryllupsinvitasjon</h3>
+                        <p class="text-white text-sm opacity-90">Minimalistisk design med botaniske detaljer</p>
+                    </div>
+                </div>
+                
+                <!-- Design 2 -->
+                <div class="gallery-item rounded-xl overflow-hidden shadow-md">
+                    <div class="bg-earth-medium bg-opacity-20 h-64 relative">
+                        <!-- SVG Illustration of baby shower invitation -->
+                        <svg class="w-full h-full" viewBox="0 0 300 240" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="50" y="20" width="200" height="200" rx="5" fill="white" stroke="#5f8d4e" stroke-width="2" />
+                            <text x="150" y="60" font-family="'Montserrat', sans-serif" font-size="14" text-anchor="middle" fill="#5f8d4e">BABYSHOWER</text>
+                            <circle cx="150" cy="100" r="30" fill="#a4be7b" opacity="0.5" />
+                            <text x="150" y="105" font-family="'Playfair Display', serif" font-size="24" text-anchor="middle" fill="#285430">👶</text>
+                            <text x="150" y="150" font-family="'Montserrat', sans-serif" font-size="12" text-anchor="middle" fill="#5f8d4e">Bli med og feire</text>
+                            <text x="150" y="170" font-family="'Playfair Display', serif" font-size="14" text-anchor="middle" fill="#285430">Lise & Markus</text>
+                            <text x="150" y="190" font-family="'Montserrat', sans-serif" font-size="12" text-anchor="middle" fill="#5f8d4e">20. mai 2023</text>
+                        </svg>
+                    </div>
+                    <div class="gallery-overlay">
+                        <h3 class="text-white font-serif font-bold text-lg">Søt babyshower-invitasjon</h3>
+                        <p class="text-white text-sm opacity-90">Leken design med pastellfarger</p>
+                    </div>
+                </div>
+                
+                <!-- Design 3 -->
+                <div class="gallery-item rounded-xl overflow-hidden shadow-md">
+                    <div class="bg-earth-medium bg-opacity-20 h-64 relative">
+                        <!-- SVG Illustration of place card -->
+                        <svg class="w-full h-full" viewBox="0 0 300 240" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="75" y="70" width="150" height="100" rx="3" fill="white" stroke="#5f8d4e" stroke-width="2" />
+                            <path d="M75,100 L225,100" stroke="#a4be7b" stroke-width="1" />
+                            <text x="150" y="90" font-family="'Montserrat', sans-serif" font-size="10" text-anchor="middle" fill="#5f8d4e">BORDKORT</text>
+                            <text x="150" y="140" font-family="'Playfair Display', serif" font-size="16" text-anchor="middle" fill="#285430">Kari Nordmann</text>
+                            <circle cx="100" cy="70" r="15" fill="#a4be7b" opacity="0.6" />
+                            <circle cx="200" cy="170" r="15" fill="#a4be7b" opacity="0.6" />
+                        </svg>
+                    </div>
+                    <div class="gallery-overlay">
+                        <h3 class="text-white font-serif font-bold text-lg">Stilfulle bordkort</h3>
+                        <p class="text-white text-sm opacity-90">Elegante bordkort med botaniske detaljer</p>
+                    </div>
+                </div>
+                
+                <!-- Design 4 -->
+                <div class="gallery-item rounded-xl overflow-hidden shadow-md">
+                    <div class="bg-earth-medium bg-opacity-20 h-64 relative">
+                        <!-- SVG Illustration of baptism invitation -->
+                        <svg class="w-full h-full" viewBox="0 0 300 240" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="50" y="20" width="200" height="200" rx="5" fill="white" stroke="#5f8d4e" stroke-width="2" />
+                            <text x="150" y="60" font-family="'Playfair Display', serif" font-size="14" text-anchor="middle" fill="#285430">DÅP</text>
+                            <path d="M100,70 L200,70" stroke="#a4be7b" stroke-width="1" />
+                            <circle cx="150" cy="110" r="25" fill="#a4be7b" opacity="0.4" />
+                            <text x="150" y="115" font-family="'Playfair Display', serif" font-size="16" text-anchor="middle" fill="#285430">✝️</text>
+                            <text x="150" y="160" font-family="'Playfair Display', serif" font-size="14" text-anchor="middle" fill="#285430">Emma Hansen</text>
+                            <text x="150" y="180" font-family="'Montserrat', sans-serif" font-size="12" text-anchor="middle" fill="#5f8d4e">10. april 2023</text>
+                        </svg>
+                    </div>
+                    <div class="gallery-overlay">
+                        <h3 class="text-white font-serif font-bold text-lg">Dåpsinvitasjon</h3>
+                        <p class="text-white text-sm opacity-90">Enkel og elegant design for dåp</p>
+                    </div>
+                </div>
+                
+                <!-- Design 5 -->
+                <div class="gallery-item rounded-xl overflow-hidden shadow-md">
+                    <div class="bg-earth-medium bg-opacity-20 h-64 relative">
+                        <!-- SVG Illustration of confirmation invitation -->
+                        <svg class="w-full h-full" viewBox="0 0 300 240" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="50" y="20" width="200" height="200" rx="5" fill="white" stroke="#5f8d4e" stroke-width="2" />
+                            <text x="150" y="60" font-family="'Playfair Display', serif" font-size="14" text-anchor="middle" fill="#285430">KONFIRMASJON</text>
+                            <line x1="100" y1="70" x2="200" y2="70" stroke="#a4be7b" stroke-width="1" />
+                            <rect x="100" y="90" width="100" height="70" rx="3" fill="#a4be7b" opacity="0.2" />
+                            <text x="150" y="130" font-family="'Playfair Display', serif" font-size="14" text-anchor="middle" fill="#285430">Jonas Olsen</text>
+                            <text x="150" y="180" font-family="'Montserrat', sans-serif" font-size="12" text-anchor="middle" fill="#5f8d4e">5. mai 2023</text>
+                        </svg>
+                    </div>
+                    <div class="gallery-overlay">
+                        <h3 class="text-white font-serif font-bold text-lg">Konfirmasjonsinvitasjon</h3>
+                        <p class="text-white text-sm opacity-90">Moderne design for konfirmasjon</p>
+                    </div>
+                </div>
+                
+                <!-- Design 6 -->
+                <div class="gallery-item rounded-xl overflow-hidden shadow-md">
+                    <div class="bg-earth-medium bg-opacity-20 h-64 relative">
+                        <!-- SVG Illustration of baby shower game -->
+                        <svg class="w-full h-full" viewBox="0 0 300 240" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="50" y="20" width="200" height="200" rx="5" fill="white" stroke="#5f8d4e" stroke-width="2" />
+                            <text x="150" y="50" font-family="'Playfair Display', serif" font-size="14" text-anchor="middle" fill="#285430">BABYSHOWER BINGO</text>
+                            <line x1="80" y1="60" x2="220" y2="60" stroke="#a4be7b" stroke-width="1" />
+                            
+                            <!-- Bingo grid -->
+                            <rect x="80" y="80" width="140" height="120" rx="3" fill="none" stroke="#5f8d4e" stroke-width="1" />
+                            <line x1="80" y1="104" x2="220" y2="104" stroke="#5f8d4e" stroke-width="1" />
+                            <line x1="80" y1="128" x2="220" y2="128" stroke="#5f8d4e" stroke-width="1" />
+                            <line x1="80" y1="152" x2="220" y2="152" stroke="#5f8d4e" stroke-width="1" />
+                            <line x1="80" y1="176" x2="220" y2="176" stroke="#5f8d4e" stroke-width="1" />
+                            
+                            <line x1="108" y1="80" x2="108" y2="200" stroke="#5f8d4e" stroke-width="1" />
+                            <line x1="136" y1="80" x2="136" y2="200" stroke="#5f8d4e" stroke-width="1" />
+                            <line x1="164" y1="80" x2="164" y2="200" stroke="#5f8d4e" stroke-width="1" />
+                            <line x1="192" y1="80" x2="192" y2="200" stroke="#5f8d4e" stroke-width="1" />
+                            
+                            <text x="94" y="92" font-family="'Montserrat', sans-serif" font-size="6" text-anchor="middle" fill="#5f8d4e">👶</text>
+                            <text x="122" y="92" font-family="'Montserrat', sans-serif" font-size="6" text-anchor="middle" fill="#5f8d4e">🍼</text>
+                            <text x="150" y="92" font-family="'Montserrat', sans-serif" font-size="6" text-anchor="middle" fill="#5f8d4e">🧸</text>
+                            <text x="178" y="92" font-family="'Montserrat', sans-serif" font-size="6" text-anchor="middle" fill="#5f8d4e">👣</text>
+                            <text x="206" y="92" font-family="'Montserrat', sans-serif" font-size="6" text-anchor="middle" fill="#5f8d4e">🎁</text>
+                        </svg>
+                    </div>
+                    <div class="gallery-overlay">
+                        <h3 class="text-white font-serif font-bold text-lg">Babyshower-spill</h3>
+                        <p class="text-white text-sm opacity-90">Morsomt bingospill for babyshower</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="#kontakt" class="inline-block bg-earth-dark hover:bg-earth-darker text-white font-medium py-3 px-6 rounded-lg transition duration-300">Få ditt eget design</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="priser" class="py-20 bg-earth-light bg-opacity-30">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <div class="inline-block mb-4">
+                    <span class="bg-earth-light text-earth-darker px-4 py-2 rounded-full text-sm font-medium">Priser</span>
+                </div>
+                <h2 class="text-3xl md:text-4xl font-serif font-bold text-earth-darker mb-4">Enkle og transparente priser</h2>
+                <p class="text-gray-700 max-w-2xl mx-auto">Jeg tilbyr fleksible pakker som kan tilpasses dine behov og budsjett.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Basic Package -->
+                <div class="price-card bg-white rounded-xl overflow-hidden shadow-md">
+                    <div class="p-8">
+                        <h3 class="text-xl font-serif font-bold text-earth-darker mb-2">Enkel pakke</h3>
+                        <div class="flex items-end mb-6">
+                            <span class="text-3xl font-bold text-earth-dark">kr 1200</span>
+                            <span class="text-gray-600 ml-1">per design</span>
+                        </div>
+                        <p class="text-gray-700 mb-6">Perfekt for deg som trenger et enkelt, men elegant design.</p>
+                        <ul class="mb-8 space-y-3">
+                            <li class="flex items-start">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-earth-dark mr-2 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                </svg>
+                                <span class="text-gray-600">1 design (invitasjon, bordkort, etc.)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-earth-dark mr-2 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                </svg>
+                                <span class="text-gray-600">2 revisjoner inkludert</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-earth-dark mr-2 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                </svg>
+                                <span class="text-gray-600">Digital fil for utskrift</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-earth-dark mr-2 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                </svg>
+                                <span class="text-gray-600">Levering innen 7 dager</span>
+                            </li>
+                        </ul>
+                        <a href="#kontakt" class="block text-center bg-earth-dark hover:bg-earth-darker text-white font-medium py-3 px-6 rounded-lg transition duration-300">Velg pakke</a>
+                    </div>
+                </div>
+                
+                <!-- Standard Package -->
+                <div class="price-card bg-white rounded-xl overflow-hidden shadow-lg border-2 border-earth-dark relative">
+                    <div class="absolute top-0 right-0 bg-earth-dark text-white px-4 py-1 text-sm font-medium">Populær</div>
+                    <div class="p-8">
+                        <h3 class="text-xl font-serif font-bold text-earth-darker mb-2">Standard pakke</h3>
+                        <div class="flex items-end mb-6">
+                            <span class="text-3xl font-bold text-earth-dark">kr 2800</span>
+                            <span class="text-gray-600 ml-1">pakke</span>
+                        </div>
+                        <p class="text-gray-700 mb-6">Vår mest populære pakke for de fleste anledninger.</p>
+                        <ul class="mb-8 space-y-3">
+                            <li class="flex items-start">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-earth-dark mr-2 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                </svg>
+                                <span class="text-gray-600">3 matchende design (f.eks. invitasjon, bordkort, takkekort)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-earth-dark mr-2 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                </svg>
+                                <span class="text-gray-600">Ubegrensede revisjoner</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-earth-dark mr-2 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                </svg>
+                                <span class="text-gray-600">Digitale filer for utskrift</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-earth-dark mr-2 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                </svg>
+                                <span class="text-gray-600">Levering innen 5 dager</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-earth-dark mr-2 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                </svg>
+                                <span class="text-gray-600">Prioritert support</span>
+                            </li>
+                        </ul>
+                        <a href="#kontakt" class="block text-center bg-earth-dark hover:bg-earth-darker text-white font-medium py-3 px-6 rounded-lg transition duration-300">Velg pakke</a>
+                    </div>
+                </div>
+                
+                <!-- Premium Package -->
+                <div class="price-card bg-white rounded-xl overflow-hidden shadow-md">
+                    <div class="p-8">
+                        <h3 class="text-xl font-serif font-bold text-earth-darker mb-2">Premium pakke</h3>
+                        <div class="flex items-end mb-6">
+                            <span class="text-3xl font-bold text-earth-dark">kr 4500</span>
+                            <span class="text-gray-600 ml-1">pakke</span>
+                        </div>
+                        <p class="text-gray-700 mb-6">Alt du trenger for en komplett visuell identitet for din anledning.</p>
+                        <ul class="mb-8 space-y-3">
+                            <li class="flex items-start">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-earth-dark mr-2 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                </svg>
+                                <span class="text-gray-600">5+ matchende design (komplett pakke)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-earth-dark mr-2 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                </svg>
+                                <span class="text-gray-600">Ubegrensede revisjoner</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-earth-dark mr-2 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                </svg>
+                                <span class="text-gray-600">Digitale filer + trykkeklare filer</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-earth-dark mr-2 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                </svg>
+                                <span class="text-gray-600">Ekspresslevering (3 dager)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-earth-dark mr-2 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                </svg>
+                                <span class="text-gray-600">VIP support</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-earth-dark mr-2 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                </svg>
+                                <span class="text-gray-600">Tilpassede spill og aktiviteter</span>
+                            </li>
+                        </ul>
+                        <a href="#kontakt" class="block text-center bg-earth-dark hover:bg-earth-darker text-white font-medium py-3 px-6 rounded-lg transition duration-300">Velg pakke</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-12 bg-white p-8 rounded-xl shadow-md">
+                <h3 class="text-xl font-serif font-bold text-earth-darker mb-4">Trenger du noe spesielt?</h3>
+                <p class="text-gray-700 mb-6">Jeg tilbyr også skreddersydde løsninger basert på dine spesifikke behov. Kontakt meg for et personlig tilbud.</p>
+                <a href="#kontakt" class="inline-block bg-earth-dark hover:bg-earth-darker text-white font-medium py-3 px-6 rounded-lg transition duration-300">Få et tilbud</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <div class="inline-block mb-4">
+                    <span class="bg-earth-light text-earth-darker px-4 py-2 rounded-full text-sm font-medium">Tilbakemeldinger</span>
+                </div>
+                <h2 class="text-3xl md:text-4xl font-serif font-bold text-earth-darker mb-4">Hva kundene sier</h2>
+                <p class="text-gray-700 max-w-2xl mx-auto">Jeg er stolt av å ha hjulpet mange kunder med å gjøre deres spesielle anledninger enda mer minnerike.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="testimonial-card bg-earth-light bg-opacity-30 p-6 rounded-xl">
+                    <div class="flex items-center mb-4">
+                        <div class="text-earth-dark">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M9.983 3v7.391c0 5.704-3.731 9.57-8.983 10.609l-.995-2.151c2.432-.917 3.995-3.638 3.995-5.849h-4v-10h10zm14.017 0v7.391c0 5.704-3.748 9.571-9 10.609l-.996-2.151c2.433-.917 3.996-3.638 3.996-5.849h-3.983v-10h9.983z"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-6 italic">"Invitasjonene til bryllupet vårt var helt fantastiske! Anna forstod nøyaktig hva vi ønsket og leverte design som passet perfekt til vårt tema. Gjestene våre var imponert!"</p>
+                    <div class="flex items-center">
+                        <div class="mr-4">
+                            <div class="w-12 h-12 bg-earth-medium rounded-full flex items-center justify-center text-white font-bold">MH</div>
+                        </div>
+                        <div>
+                            <h4 class="font-medium text-earth-darker">Marie Hansen</h4>
+                            <p class="text-sm text-gray-600">Bryllup, juni 2023</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 2 -->
+                <div class="testimonial-card bg-earth-light bg-opacity-30 p-6 rounded-xl">
+                    <div class="flex items-center mb-4">
+                        <div class="text-earth-dark">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M9.983 3v7.391c0 5.704-3.731 9.57-8.983 10.609l-.995-2.151c2.432-.917 3.995-3.638 3.995-5.849h-4v-10h10zm14.017 0v7.391c0 5.704-3.748 9.571-9 10.609l-.996-2.151c2.433-.917 3.996-3.638 3.996-5.849h-3.983v-10h9.983z"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-6 italic">"Jeg bestilte en komplett pakke for babyshoweren min, og resultatet var over all forventning. Spesielt spillene var en stor hit blant gjestene. Anbefales på det sterkeste!"</p>
+                    <div class="flex items-center">
+                        <div class="mr-4">
+                            <div class="w-12 h-12 bg-earth-medium rounded-full flex items-center justify-center text-white font-bold">KL</div>
+                        </div>
+                        <div>
+                            <h4 class="font-medium text-earth-darker">Kristine Larsen</h4>
+                            <p class="text-sm text-gray-600">Babyshower, april 2023</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 3 -->
+                <div class="testimonial-card bg-earth-light bg-opacity-30 p-6 rounded-xl">
+                    <div class="flex items-center mb-4">```
